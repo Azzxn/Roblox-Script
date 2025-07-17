@@ -4,7 +4,7 @@ local UserInputService = game:GetService("UserInputService")
 local Camera = workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
--- Configurações iniciais
+
 local espEnabled = true
 local aimbotActive = false
 local espData = {}
@@ -15,13 +15,13 @@ local flySpeed = 50
 local flyDirection = Vector3.new(0,0,0)
 local SPEED_MIN, SPEED_MAX = 10, 300
 
--- Filtro de times
+
 local ignoredTeams = { ["Neutral"] = true, ["Lobby"] = true }
 local function shouldIgnore(p)
     return (p.Team and ignoredTeams[p.Team.Name]) or (p.Team == LocalPlayer.Team)
 end
 
--- Toggle ESP
+
 local toggleText = Drawing.new("Text")
 toggleText.Text, toggleText.Size = "[ESP: ON] (Clique aqui)", 16
 toggleText.Position = Vector2.new(20,40)
@@ -34,7 +34,7 @@ toggleText.MouseButton1Click = function()
     toggleText.Color = espEnabled and Color3.fromRGB(0,255,0) or Color3.fromRGB(255,0,0)
 end
 
--- FOV visual
+
 local fovCircle = Drawing.new("Circle")
 fovCircle.Color, fovCircle.Thickness = Color3.fromRGB(0,255,0), 1
 fovCircle.Filled, fovCircle.Transparency, fovCircle.Visible = false, 1, true
@@ -44,7 +44,7 @@ RunService.RenderStepped:Connect(function()
     fovCircle.Radius = FOV
 end)
 
---🔧 MENU AVANÇADO COM ABAS + ÍCONES + ANIMAÇÕES + SLIDERS
+
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
@@ -53,11 +53,11 @@ local LocalPlayer = Players.LocalPlayer
 local gui = Instance.new("ScreenGui", LocalPlayer:WaitForChild("PlayerGui"))
 gui.Name = "AdvancedCheatUI"
 
--- Configurações visuais globais
+
 local mainColor = Color3.fromRGB(25,25,25)
 local accentColor = Color3.fromRGB(0,255,100)
 
--- Configs
+
 local espAtivo = true
 local FOV = 100
 local FOV_MIN, FOV_MAX = 50, 300
@@ -65,10 +65,10 @@ local flySpeed = 50
 local SPEED_MIN, SPEED_MAX = 10, 300
 local hitboxAtivo, boneAtivo, rangeAtivo = false, false, false
 
--- Aba atual
+
 local abaAtual = "ESP"
 
--- Container principal
+
 local mainFrame = Instance.new("Frame", gui)
 mainFrame.Size = UDim2.new(0, 300, 0, 360)
 mainFrame.Position = UDim2.new(0, 20, 0, 100)
@@ -78,13 +78,13 @@ mainFrame.BackgroundTransparency = 0.1
 mainFrame.ClipsDescendants = true
 Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 12)
 
--- Animação de entrada
+
 mainFrame.Size = UDim2.new(0, 0, 0, 360)
 TweenService:Create(mainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
     Size = UDim2.new(0, 300, 0, 360)
 }):Play()
 
--- Título
+
 local title = Instance.new("TextLabel", mainFrame)
 title.Size = UDim2.new(1, 0, 0, 40)
 title.Text = "🔧 Menu de Cheats"
@@ -94,7 +94,7 @@ title.TextSize = 18
 title.TextColor3 = Color3.fromRGB(255,255,255)
 title.TextXAlignment = Enum.TextXAlignment.Center
 
--- Botões de abas
+
 local abas = {"ESP", "Aimbot", "Fly"}
 local botoesAbas = {}
 
@@ -122,7 +122,7 @@ for i, nome in ipairs(abas) do
     botoesAbas[nome] = btn
 end
 
--- Painéis para cada aba
+
 local function criarPainel(nome)
     local p = Instance.new("Frame", mainFrame)
     p.Name = "Painel"..nome
@@ -137,7 +137,7 @@ local espPainel = criarPainel("ESP")
 local aimbotPainel = criarPainel("Aimbot")
 local flyPainel = criarPainel("Fly")
 
--- === ABA ESP ===
+
 local espToggle = Instance.new("TextButton", espPainel)
 espToggle.Size = UDim2.new(0, 240, 0, 30)
 espToggle.Position = UDim2.new(0, 0, 0, 0)
@@ -154,7 +154,7 @@ espToggle.MouseButton1Click:Connect(function()
     espToggle.TextColor3 = espAtivo and accentColor or Color3.fromRGB(255,0,0)
 end)
 
--- === ABA AIMBOT ===
+
 local aimLabel = Instance.new("TextLabel", aimbotPainel)
 aimLabel.Size = UDim2.new(1, 0, 0, 30)
 aimLabel.Position = UDim2.new(0, 0, 0, 0)
@@ -188,7 +188,7 @@ toggleOption(aimbotPainel, "Hitbox", "hitboxAtivo")
 toggleOption(aimbotPainel, "Bone Tracking", "boneAtivo")
 toggleOption(aimbotPainel, "Range Check", "rangeAtivo")
 
--- === FOV SLIDER ===
+
 local fovLabel = Instance.new("TextLabel", aimbotPainel)
 fovLabel.Position = UDim2.new(0, 0, 0, 130)
 fovLabel.Size = UDim2.new(0, 240, 0, 20)
@@ -226,7 +226,7 @@ fovSlider.InputBegan:Connect(function(i)
     end
 end)
 
--- === ABA FLY ===
+
 local flyInfo = Instance.new("TextLabel", flyPainel)
 flyInfo.Size = UDim2.new(1, 0, 0, 30)
 flyInfo.Position = UDim2.new(0, 0, 0, 0)
@@ -235,7 +235,7 @@ flyInfo.Font = Enum.Font.Gotham
 flyInfo.TextColor3 = Color3.fromRGB(255,255,255)
 flyInfo.BackgroundTransparency = 1
 
--- === SPEED SLIDER ===
+
 local speedLabel = Instance.new("TextLabel", flyPainel)
 speedLabel.Position = UDim2.new(0, 0, 0, 40)
 speedLabel.Size = UDim2.new(0, 240, 0, 20)
@@ -274,9 +274,9 @@ speedSlider.InputBegan:Connect(function(i)
 end)
 
 
--- [continua com o restante do script normalmente...]
 
--- Controles de tecla
+
+
 UserInputService.InputBegan:Connect(function(i, gp)
     if gp then return end
     if i.KeyCode == Enum.KeyCode.E then aimbotActive = true end
@@ -294,7 +294,7 @@ UserInputService.InputBegan:Connect(function(i, gp)
     if i.UserInputType == Enum.UserInputType.MouseButton1 then toggleText:MouseButton1Click() end
 end)
 
--- Resto do script segue com ESP, Aimbot, Fly, etc...
+
 UserInputService.InputEnded:Connect(function(i)
     if i.KeyCode == Enum.KeyCode.E then aimbotActive = false end
     if i.KeyCode == Enum.KeyCode.Q then noclipEnabled = false; flyDirection = Vector3.new(0,0,0) end
@@ -305,7 +305,7 @@ UserInputService.InputEnded:Connect(function(i)
     if i.KeyCode == Enum.KeyCode.Space then flyDirection -= Vector3.new(0,1,0) end
 end)
 
--- Noclip/Voo loop
+
 RunService.Heartbeat:Connect(function(delta)
     local char = LocalPlayer.Character
     if noclipEnabled and char then
@@ -331,7 +331,7 @@ RunService.Heartbeat:Connect(function(delta)
     end
 end)
 
--- Criação / remoção de ESP
+
 local function createESP(p)
     if p == LocalPlayer or espData[p] then return end
     espData[p] = {
@@ -395,7 +395,7 @@ local function updateESP()
     end
 end
 
--- Aimbot com Raycast e FOV
+
 local function getClosestVisibleHead()
     local best,short, mpos = nil, math.huge, UserInputService:GetMouseLocation()
     for _,p in ipairs(Players:GetPlayers()) do
@@ -424,7 +424,7 @@ local function aimAt(t)
     end
 end
 
--- Magic Bullet
+
 local function magicBullet()
     for _,p in ipairs(Players:GetPlayers()) do
         if p ~= LocalPlayer and not shouldIgnore(p) and p.Character and p.Character:FindFirstChild("Head") then
@@ -443,7 +443,7 @@ local function magicBullet()
     end
 end
 
--- Loop principal
+
 Players.PlayerAdded:Connect(createESP)
 Players.PlayerRemoving:Connect(removeESP)
 
